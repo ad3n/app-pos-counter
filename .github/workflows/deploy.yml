@@ -23,11 +23,6 @@ jobs:
         run: npm install
       - name: Build prod
         run: npm run build
-      - name: Package artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: build
 
   deploy:
     name: Checkout & Deploy
