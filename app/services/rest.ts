@@ -9,6 +9,8 @@ export const baseQuery = fetchBaseQuery({
         const auth = await getUserToken()
         //const token = (getState() as any)?.auth?.token
         // // If we have a token set in state, let's assume that we should be passing it.
+        headers.set("Access-Control-Allow-Origin", '*');
+        
         if (auth?.token) {
             headers.set('authorization', `Bearer ${auth?.token}`);
         }
