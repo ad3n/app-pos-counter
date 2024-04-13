@@ -21,17 +21,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20.x
-      - name: clean cache
-        run: npm cache clean --force
-      - name: Install dependencies
-        run: npm install
-      - name: Build prod
-        run: npm run build
       - name: Deploy to server
         uses: up9cloud/action-rsync@master
         env:
           TARGET: ${{ secrets.PATH }}
-          SOURCE: /home/runner/work/app-pos-counter/app-pos-counter/workspace/build
           HOST: ${{ secrets.HOST }}
           USER: ${{ secrets.USERNAME }}
           PORT: ${{ secrets.PORT }}
