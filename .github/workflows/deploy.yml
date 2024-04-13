@@ -9,11 +9,25 @@ on:
       - production
 
 jobs:
+  build:
+    name: Building
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout codes
+        uses: actions/checkout@v2
+      - name: Set Node.js 18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+      - name: Install dependencies
+        run: npm install
+      - name: Build prod
+        run: npm run build
+
   deploy:
     name: Checkout & Deploy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - name: Deploy to server
         uses: up9cloud/action-rsync@master
         env:
@@ -24,4 +38,6 @@ jobs:
           KEY: ${{ secrets.SSHKEY }}
           ARGS: -avzrut --delete --exclude=/.git/ --exclude='.env' --exclude=/.github/
           POST_SCRIPT: |
-            cd ${{ secrets.PATH }} && cd ../scripts && sh deploy.sh
+            pm2 restart counterpos
+          # POST_SCRIPT: |
+          #   cd ${{ secrets.PATH }} && cd ../scripts && sh deploy.sh
