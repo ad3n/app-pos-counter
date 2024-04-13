@@ -31,14 +31,10 @@ jobs:
     steps:
       - name: Checkout build
         uses: actions/checkout@v3
-        with: 
-          sparse-checkout: |
-            build
       - name: Deploy to server
         uses: up9cloud/action-rsync@master
         env:
           TARGET: ${{ secrets.PATH }}
-          SOURCE: /home/runner/work/app-pos-counter/app-pos-counter
           HOST: ${{ secrets.HOST }}
           USER: ${{ secrets.USERNAME }}
           PORT: ${{ secrets.PORT }}
