@@ -24,7 +24,7 @@ export default function DashboardContainer() {
     const onListIncome = () => navigate("/transaction/omzet?type=list")
 
     return (
-        <div className="container mx-auto pt-9 px-8">
+        <div className="container mx-auto pt-9 px-2">
             <h2 className="dark:text-white text-center mt-12 my-5 text-2xl">Hello, Admin</h2>
 
             <Card className="max-w-full">

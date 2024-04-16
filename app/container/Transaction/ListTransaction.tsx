@@ -50,7 +50,7 @@ export default function ListTransactionContainer() {
     },[filterData, setFilterData])
     
     return (
-        <div className="pb-2">
+        <div className="pb-2 px-2 pt-6">
             <Card className="max-w-full">
                 <div className="flex items-center justify-between">
                     <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">

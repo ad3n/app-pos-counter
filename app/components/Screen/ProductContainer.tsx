@@ -18,7 +18,7 @@ export function ProductContainer(_props:IProps) {
         <SearchBarContainer handleChange={onChange} placeholder="Search product"/>
             <div className={clsx([
                 "container mx-auto max-h-full",
-                {"pt-5 px-4": _props.spacing === "narrow"},
+                {"pt-5 px-2": _props.spacing === "narrow"},
                 {"pt-1": _props.spacing === "full"}
             ])}>
                 {_props.children}

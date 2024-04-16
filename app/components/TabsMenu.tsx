@@ -42,18 +42,18 @@ export default function TabsMenu() {
                 <Button theme={innerTheme} 
                     className="flex-auto flex-col rounded-none border-b-0 border-l-0" onClick={onDashboard} 
                     color={toggleColor("/dash")}>
-                    <MdDashboard size={60} className="h-6 w-6" />
-                    <div>Dashboard</div>
+                    <MdDashboard size={60} className="h-6 w-5" />
+                    <div className="text-sm">Dasbor</div>
                 </Button>
-                <Button theme={innerTheme} className="flex-auto" onClick={onTransaction} 
+                <Button theme={innerTheme} className="flex-auto  flex-col" onClick={onTransaction} 
                     color={toggleColor("/transaction")} >
                     <MdNotes className="h-6 w-6" />
-                    <div>Trasactions</div>
+                    <div>Riwayat</div>
                 </Button>
                 <Button theme={innerTheme} className="flex-auto h-16" onClick={onProduct} 
                     color={toggleColor("/products")}>
                     <MdOutbox size={"2em"} className="h-6 w-6" />
-                    <div>Products</div>
+                    <div>Produk</div>
                 </Button>
                 <Button theme={innerTheme} className="flex-auto rounded-none border-r-0" onClick={onAccount} 
                     color={toggleColor("/account")}>
