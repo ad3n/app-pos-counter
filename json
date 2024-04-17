@@ -1,0 +1,15 @@
+curl 'http://localhost:8080/emp/v1/login' \
+  -H 'Accept: */*' \
+  -H 'Accept-Language: en,en-US;q=0.9' \
+  -H 'Connection: keep-alive' \
+  -H 'Content-Type: text/plain;charset=UTF-8' \
+  -H 'Origin: http://localhost:5174' \
+  -H 'Referer: http://localhost:5174/' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Sec-Fetch-Mode: no-cors' \
+  -H 'Sec-Fetch-Site: same-site' \
+  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36' \
+  -H 'sec-ch-ua: "Chromium";v="124", "Google Chrome";v="124", "Not-A.Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  --data-raw '{"no_hp":"11314","password":"ddaada"}'
