@@ -14,7 +14,7 @@ export const authApi = createApi({
         body,
       }),
       async onCacheEntryAdded(arg, { getState }) {
-        console.log("onCacheEntryAdded", getState())
+        //console.log("onCacheEntryAdded", getState())
       }
     }),
   })

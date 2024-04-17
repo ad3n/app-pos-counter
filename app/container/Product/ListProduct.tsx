@@ -71,7 +71,8 @@ export default function ListProductContainer({type="screen", spacing="narrow"}:I
                     </div>
                     
                      <div className="flex max-w-md gap-4 ml-2 items-center justity-center">
-                        <Checkbox color="teal" value={filterData?.active? "on" : "off"} checked={filterData?.active??false} onChange={toggleSwitchActive} />
+                        <Checkbox color="teal" value={filterData?.active? "on" : "off"} checked={filterData?.active??false} 
+                            onChange={toggleSwitchActive} />
                         <Label htmlFor="accept" className="flex">
                             Active?
                         </Label>
@@ -105,7 +106,8 @@ export const ItemCategory = (
     return (
         <Card className="max-w-full mt-4">
             {<div className="flow-root">
-                {(products && products.length > 0) ? <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+                {(products && products.length > 0) ? <ul className="
+                divide-y divide-gray-200 dark:divide-gray-700">
                     {products.map(item => <ItemProduct category={category} linkType={type} item={item} />)}
                 </ul> : <div className="my-4">
                     <span className="text-white align-center">No products</span>

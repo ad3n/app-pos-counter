@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "build": "remix vite:build",
-    "dev": "remix vite:dev --mode production",
+    "build:prod": "remix vite:build --mode production",
+    "publish": "sh $HOME/pinkcell-app/spa/.publish/deploy.sh",
+    "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "preview": "vite preview",
     "typecheck": "tsc"

@@ -9,7 +9,8 @@ import {
     useActivateOrDeactivateMutation,
     useGetStocksQuery,
     PostProductStock,
-    useAddStockMutation
+    useAddStockMutation,
+    useEditStockMutation
  } from "~/services/actions";
 import { useEffect, useState, useCallback } from "react";
 import { HRDivider, InputCheckbox, InputField, LayoutItemDetail } from "~/components";
@@ -23,7 +24,8 @@ import { MdAdd } from "react-icons/md";
 import moment from "moment";
 import { AlertView } from "~/components";
 import { useToaster } from "~/components/Context/Toast";
-
+import { MdEdit } from "react-icons/md";
+import { AddQtyModal, UpdateQtyModal } from "./components";
 
 export default function ViewProductContainer({ type } :  {type:string }) {
     const navigate = useNavigate()
@@ -146,7 +148,7 @@ export default function ViewProductContainer({ type } :  {type:string }) {
 
             <HRDivider size="md" noBorder={true} />
 
-            {curStates.type === EProductTypes.piece && <ItemStocks product_id={id} />}
+            {curStates.type === EProductTypes.piece && <ItemStocks staff_id={account?.user?.id as number} product_id={id} />}
 
             <HRDivider size="md" noBorder={true} />
 
@@ -169,13 +171,30 @@ export default function ViewProductContainer({ type } :  {type:string }) {
 }
 
 export const ItemStocks = ( 
-    { product_id } : 
-    { product_id: number
+    { product_id, staff_id } : 
+    { product_id: number, staff_id:number
 }) => {
+    const [qty, setQty] = useState<number>()
+    const [id, setId] = useState<number>()
+    const [openmodal, setOpenmodal] = useState<boolean>()
+
     const {isLoading, data, refetch, isSuccess} = useGetStocksQuery(product_id)
     const dateShow = (date:string) => {
         return moment(date, "DD-MM-YYYY HH:mm:ss").utcOffset(7).format("DD MMM YYYY - HH:mm")
     }
+
+    const toggleStockModal = () => {
+        setOpenmodal(!openmodal)
+    }
+
+    const onOpenModal = (id:number, qty:number) => {
+       setId(id) 
+       setQty(qty)
+       setOpenmodal(true)
+    }
+
+    const isFirstEditable = (index:number) => data?.edit.id === index
+
     return (<div>
         <div className="flex mb-2 items-center">
             <h3 className="dark:text-white font-2xl mr-2">Riwayat Stock</h3>
@@ -187,7 +206,7 @@ export const ItemStocks = (
         <Card className="max-w-full mt-4">
             {isLoading ? <Loader /> : <div className="flow-root">
                 {(isSuccess && data?.data && data?.data?.length > 0) ? <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                    {data.data.map(item => <li className="py-4">
+                    {data.data.map((item,index) => <li className="py-4">
                         <div className="flex items-center space-x-4">
                             <div className="min-w-0 flex-1">
                                 <p className="truncate text-md font-medium text-gray-900 dark:text-white">
@@ -207,6 +226,10 @@ export const ItemStocks = (
                                 <Badge color={item.type === "in" ? "green" : "red"} className="text-xl">
                                     {item.qty > 0 ? "+":""}{item.qty}
                                 </Badge>
+                                {index > 0 && isFirstEditable(item.id) && <div onClick={()=>onOpenModal(item.id,item.qty)} className="rounded cursor-pointer px-2 py-1 mt-2 border border-gray-900 bg-gray-700">
+                                    <MdEdit />
+                                </div>}
+                                
                             </div>
                         </div>
                     </li>)}
@@ -215,55 +238,15 @@ export const ItemStocks = (
                 </div>}
             </div>}
         </Card>
-        </div>
-    )
-}
 
-export const AddQtyModal = (
-    {product_id, staff_id, open=false, toggleStockModal}:
-    {product_id:number, staff_id:number,open:boolean, toggleStockModal:()=>void
-}) => {
-    const [formState, setFormState] = useState<PostProductStock>({
-        qty:1,
-        product_id: Number(product_id),
-        employee_id: staff_id
-    })
-    const [errors, setErrors] = useState<any>()
-    const [addStock, addStates] = useAddStockMutation()
-
-    const handleChange = useCallback(({
-        target: { name, value },
-    }: React.ChangeEvent<HTMLInputElement>) => {
-        setFormState((prev) => ({ ...prev, [name]: value }))
-    },[setFormState, formState])
-
-    const onConfirm = () => {
-        try {
-            const adata = addStock(formState).unwrap()
-        } catch (error) {
-            setErrors(error)
-        }
-    }
-
-    useEffect(()=>{
-        if( addStates.status === QueryStatus.fulfilled ) {
-            toggleStockModal()
-        }
-    },[addStates.status, addStates.isSuccess])
-
-    return (
-        <Modal size={"sm"} show={open} onClose={toggleStockModal}>
-            <Modal.Header>Tambah Stok</Modal.Header>
-            <Modal.Body>
-                {(addStates.isError) && <AlertView title="Info" color="failure">
-                    {errors?.data?.validated === false ? "Ada kolom yang tidak valid & mohon lengkapi" : "Something error when posting supplier"}
-                </AlertView>}
-                <InputField value={formState.qty} type="number" min={1} max={50} label={"Qty"} id="qty" handleChange={handleChange} />
-            </Modal.Body>
-            <Modal.Footer>
-                <Button fullSized onClick={onConfirm} color="green">Simpan</Button>
-                <Button fullSized outline={true} color="gray" onClick={toggleStockModal}>Batal</Button>
-            </Modal.Footer>
-        </Modal>
+            {(openmodal) && <UpdateQtyModal 
+                id={Number(id)} 
+                qty={Number(qty)}
+                open={Boolean(openmodal)} 
+                staff_id={staff_id} 
+                toggleStockModal={toggleStockModal}
+            />}   
+            
+    </div>
     )
 }

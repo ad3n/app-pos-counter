@@ -73,6 +73,7 @@ export type BrandResponse = BrandItem[]
 
 export type TProductStockResponse = SuccessResponse<StockItem[]> & {
   total:number
+  edit:StockItem
 }
 
 export type PostProductStock = {

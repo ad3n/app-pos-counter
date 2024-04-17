@@ -3,7 +3,7 @@ import {
   Meta,
   Outlet,
   Scripts,
-  ScrollRestoration,
+  ScrollRestoration
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 import styles from "~/app.css?url"
@@ -13,27 +13,28 @@ import { ToastProvider } from "./components/Context/Toast";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
+  { rel: "manifest", href: "/manifest.webmanifest"},
   {
     rel: 'apple-touch-icon',
     sizes: '180x180',
-    href: '/icon-72x72.png',
+    href: '/icon-144x144.png',
   },
   {
     rel: 'icon',
     type: 'image/png',
     sizes: '32x32',
-    href: '/icon-72x72.png',
+    href: '/images/icon-72x72.png',
   },
   {
     rel: 'icon',
     type: 'image/png',
     sizes: '16x16',
-    href: '/icon-72x72.png',
+    href: '/images/icon-72x72.png',
   },
   {
     rel: 'icon',
-    type: 'image/x-icon',
-    href: '/icon-72x72.png',
+    type: 'image/png',
+    href: '/images/icon-72x72.png',
   },
 ];
 
