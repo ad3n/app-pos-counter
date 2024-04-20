@@ -36,7 +36,7 @@ export default function AddProductContainer({ type } :  {type:string }) {
         on_sale:false,
         supplier_id:0,
         brand_id:0,
-        active:undefined
+        active:true
     })
     const [active, setActive] = useState<boolean>()
     const [listSuppliers, setListSuppliers] = useState<any>()
@@ -99,7 +99,7 @@ export default function AddProductContainer({ type } :  {type:string }) {
                 supplier_id:states.supplier_id,
                 active:states.active,
             })
-            setActive(states.active)
+            setActive(states?.active??false)
         }
     },[])
 

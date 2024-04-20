@@ -17,11 +17,12 @@ export function ProductContainer(_props:IProps) {
     return (<>
         <SearchBarContainer handleChange={onChange} placeholder="Search product"/>
             <div className={clsx([
-                "container mx-auto max-h-full",
+                "container mx-auto max-h-full pb-2",
                 {"pt-5 px-2": _props.spacing === "narrow"},
                 {"pt-1": _props.spacing === "full"}
             ])}>
                 {_props.children}
             </div>
+            <div className="pb-12"/>
         </>)
 } 

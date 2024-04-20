@@ -226,7 +226,7 @@ export const ItemStocks = (
                                 <Badge color={item.type === "in" ? "green" : "red"} className="text-xl">
                                     {item.qty > 0 ? "+":""}{item.qty}
                                 </Badge>
-                                {index > 0 && isFirstEditable(item.id) && <div onClick={()=>onOpenModal(item.id,item.qty)} className="rounded cursor-pointer px-2 py-1 mt-2 border border-gray-900 bg-gray-700">
+                                {index > -1 && isFirstEditable(item.id) && <div onClick={()=>onOpenModal(item.id,item.qty)} className="rounded cursor-pointer px-2 py-1 mt-2 border border-gray-900 bg-gray-700">
                                     <MdEdit />
                                 </div>}
                                 

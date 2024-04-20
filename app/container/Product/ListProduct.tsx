@@ -42,7 +42,6 @@ export default function ListProductContainer({type="screen", spacing="narrow"}:I
     }
 
     const toggleSwitchActive = ({target:{name,value}}:ChangeEvent<HTMLInputElement>) => {
-        console.log("vlue", value)
         setFilterData(prev=>({...prev, active:value === "on" ? false : true}))
     }
 
@@ -53,7 +52,7 @@ export default function ListProductContainer({type="screen", spacing="narrow"}:I
     return (
         <ProductContainer handleChange={onSearch} spacing={spacing}>
             <Card className="max-w-full">
-                {type == "screen" && <div className="mb-4 flex items-center justify-between">
+                {type == "screen" && <div className="flex items-center justify-between">
                     <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white">Product List</h5>
                     <Button onClick={onAdd}>
                         <MdAdd size={16} /><span className="ml-2">Item</span>
@@ -104,10 +103,9 @@ export const ItemCategory = (
     { products: ProductItem[], type:IProps["type"], category:string 
 }) => {
     return (
-        <Card className="max-w-full mt-4">
+        <Card className="max-w-full mt-4" theme={{root:{children:"flex h-full flex-col justify-center gap-4 p-4"}}}>
             {<div className="flow-root">
-                {(products && products.length > 0) ? <ul className="
-                divide-y divide-gray-200 dark:divide-gray-700">
+                {(products && products.length > 0) ? <ul className="divide-y divide-gray-200 dark:divide-gray-700">
                     {products.map(item => <ItemProduct category={category} linkType={type} item={item} />)}
                 </ul> : <div className="my-4">
                     <span className="text-white align-center">No products</span>
@@ -125,7 +123,7 @@ export const ItemProduct = (
     const { name, price, sale_price, type, brand_name, active, total_qty } = item
     const labelType = () => {
         return type === EProductTypes.piece ? "Satuan" : 
-            type === EProductTypes.saldo ? "ELektrik" : 
+            type === EProductTypes.saldo ? "Elektrik" : 
                 "Bebas Nominal"
     }
 
@@ -141,30 +139,29 @@ export const ItemProduct = (
     }
     
     return (
-        <li className={clsx(["py-3 sm:py-4 cursor-pointer", {'opacity-25':isActive}])} onClick={()=>onClick()}>
-            <div className="flex items-center space-x-4">
+        <li className={clsx(["py-3 sm:py-4 cursor-pointer", {'opacity-50':isActive}])} onClick={()=>onClick()}>
+            <p className="truncate lg:text-md sm:text-sm font-medium text-gray-900 dark:text-white">{name}</p>
+            <div className="flex items-center space-x-2">
                 <div className="min-w-0 flex-1">
-                    <p className="truncate text-md font-medium text-gray-900 dark:text-white">{name}</p>
-                    <Badge className="inline-flex not-italic mt-2" color={"gray"} size={"sm"}>{labelType()}</Badge>
+                    <Badge className="inline-flex not-italic" color={"gray"} size={"xs"}>{labelType()}</Badge>
                     {brand_name && 
-                        <Badge className="inline-flex mt-2 ml-2" color={"indigo"} size={"sm"}>{brand_name}</Badge>}
+                        <Badge className="inline-flex ml-2" color={"indigo"} size={"xs"}>{brand_name}</Badge>}
                 </div>
                 <div className="flex flex-col items-end font-semibold text-gray-900 dark:text-white"> 
-                    {type === EProductTypes.volume && <p className="truncate text-sm font-medium text-gray-300 dark:text-white-200">Profit</p>}       
-                    <div className={item.on_sale ? "line-through text-lg dark:text-gray-400" : "text-xl"}>
+                    <div className={item.on_sale ? "line-through text-lg dark:text-gray-400" : "text-lg"}>
                         {type === EProductTypes.volume ? "+":""}{currency(price as number)}
                     </div>
                     {Number(item.on_sale) === 1 && <Badge color={"lime"} size={30}> 
                         {currency(sale_price as number)}
                     </Badge>}
-
-                    {type === EProductTypes.piece && (!total_qty || total_qty < 1) ? <Badge color="red" className="mt-1 text-sm font-semibold">
-                        Out of Stock
-                    </Badge> : null}
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-700 dark:text-gray-500">        
                     {type === EProductTypes.piece && total_qty ? <Badge color="green" className="mr-1 text-md font-bold">
                         {total_qty}
+                    </Badge> : null}
+                    {type === EProductTypes.piece && (!total_qty || total_qty < 1) ? <Badge color="red" size={"xs"} 
+                        className="mt-1 text-sm font-semibold">
+                        out
                     </Badge> : null}
                    <MdArrowForward onClick={()=>onClick()} />
                 </div>
