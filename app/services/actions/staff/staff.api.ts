@@ -10,6 +10,7 @@ export const staffApi = createApi({
   endpoints: (build) => ({
     getStaffs: build.query<StaffListResponse, void>({
       query: () => '/employee',
+      keepUnusedDataFor:60 * 60 * 60,
       providesTags: (result, error, arg) =>
         result 
           ? [...result.map(({ id }) => ({ type: 'Staffs' as const, id })), 'Staffs']

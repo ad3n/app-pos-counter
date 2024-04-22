@@ -75,7 +75,7 @@ export const OmzetInputContainer = () => {
     }
 
     const handleChangeProvider = (
-        id:number):void => setFormState((prev)=>({...prev, provider:id}))
+        id:number):void => setFormState((prev)=>({...prev, provider_id:id}))
 
     const handleChangeCustomer = (
         id:number):void => setFormState((prev)=>({...prev, customer_id:id}))

@@ -20,6 +20,7 @@ export const AddQtyModal = (
         employee_id: staff_id
     })
     const [errors, setErrors] = useState<any>()
+    const [show, setShow] = useState<boolean>()
     const [addStock, addStates] = useAddStockMutation()
 
     const handleChange = useCallback(({

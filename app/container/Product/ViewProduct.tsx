@@ -24,8 +24,8 @@ import { MdAdd } from "react-icons/md";
 import moment from "moment";
 import { AlertView } from "~/components";
 import { useToaster } from "~/components/Context/Toast";
-import { MdEdit } from "react-icons/md";
-import { AddQtyModal, UpdateQtyModal } from "./components";
+import { MdEdit, MdDelete } from "react-icons/md";
+import { AddQtyModal, UpdateQtyModal, DeleteQtyModal } from "./components";
 
 export default function ViewProductContainer({ type } :  {type:string }) {
     const navigate = useNavigate()
@@ -159,7 +159,7 @@ export default function ViewProductContainer({ type } :  {type:string }) {
         
             <div className="h-10 mb-10"/>
 
-            {(account?.user?.id && EProductTypes.piece === curStates.type) && <AddQtyModal 
+            {(account?.user?.id && openmodal) && <AddQtyModal 
                 product_id={id} 
                 open={Boolean(openmodal)} 
                 staff_id={account?.user?.id} 
@@ -177,7 +177,7 @@ export const ItemStocks = (
     const [qty, setQty] = useState<number>()
     const [id, setId] = useState<number>()
     const [openmodal, setOpenmodal] = useState<boolean>()
-
+    const [openremove, setOpenremove] = useState<boolean>()
     const {isLoading, data, refetch, isSuccess} = useGetStocksQuery(product_id)
     const dateShow = (date:string) => {
         return moment(date, "DD-MM-YYYY HH:mm:ss").utcOffset(7).format("DD MMM YYYY - HH:mm")
@@ -187,11 +187,20 @@ export const ItemStocks = (
         setOpenmodal(!openmodal)
     }
 
+    const toggleRemoveModal = () => {
+        setOpenremove(!open)
+    }
+
     const onOpenModal = (id:number, qty:number) => {
        setId(id) 
        setQty(qty)
        setOpenmodal(true)
     }
+
+    const onOpenModalRemove = (id:number) => {
+        setId(id) 
+        setOpenremove(true)
+     }
 
     const isFirstEditable = (index:number) => data?.edit.id === index
 
@@ -205,7 +214,8 @@ export const ItemStocks = (
        
         <Card className="max-w-full mt-4">
             {isLoading ? <Loader /> : <div className="flow-root">
-                {(isSuccess && data?.data && data?.data?.length > 0) ? <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+                {(isSuccess && data?.data && data?.data?.length > 0) ? <ul 
+                    className="divide-y divide-gray-200 dark:divide-gray-700">
                     {data.data.map((item,index) => <li className="py-4">
                         <div className="flex items-center space-x-4">
                             <div className="min-w-0 flex-1">
@@ -226,8 +236,19 @@ export const ItemStocks = (
                                 <Badge color={item.type === "in" ? "green" : "red"} className="text-xl">
                                     {item.qty > 0 ? "+":""}{item.qty}
                                 </Badge>
-                                {index > -1 && isFirstEditable(item.id) && <div onClick={()=>onOpenModal(item.id,item.qty)} className="rounded cursor-pointer px-2 py-1 mt-2 border border-gray-900 bg-gray-700">
-                                    <MdEdit />
+                                {index > -1 && isFirstEditable(item.id) && <div 
+                                    className="flex flex-row space-gap-2">
+                                    <div 
+                                        onClick={()=>onOpenModal(item.id,item.qty)} 
+                                        className="rounded cursor-pointer px-2 py-1 mt-2 border border-gray-900 bg-gray-700">
+                                        <MdEdit />
+                                    </div>
+
+                                    <div 
+                                        onClick={()=>onOpenModalRemove(item.id)} 
+                                        className="rounded cursor-pointer px-2 py-1 mt-2 border border-gray-900 bg-gray-700">
+                                        <MdDelete />
+                                    </div>
                                 </div>}
                                 
                             </div>
@@ -241,11 +262,18 @@ export const ItemStocks = (
 
             {(openmodal) && <UpdateQtyModal 
                 id={Number(id)} 
-                qty={Number(qty)}
+                qty={Number(qty)} 
                 open={Boolean(openmodal)} 
                 staff_id={staff_id} 
                 toggleStockModal={toggleStockModal}
             />}   
+
+            {(openremove) && <DeleteQtyModal 
+                id={Number(id)} 
+                open={Boolean(openremove)} 
+                staff_id={staff_id} 
+                toggleStockModal={toggleRemoveModal}
+            />} 
             
     </div>
     )

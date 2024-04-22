@@ -8,7 +8,7 @@ import {
 
 export const productsApi = createApi({
   baseQuery,
-  tagTypes: ['Products', 'Brands', 'Stocks'],
+  tagTypes: ['Products', 'Brands', 'Stocks', 'Categories'],
   reducerPath:'products',
   endpoints: (build) => ({
     getProducts: build.query<ProductListResponse, GetRequestProduct>({
@@ -32,6 +32,9 @@ export const productsApi = createApi({
         url:`categories`,
         params:params
       }),
+      keepUnusedDataFor:60 * 60 * 60,
+      providesTags: (result) =>
+        result && result.length > 0 ? result.map(({ id }) => ({ type: 'Categories', id })) : [],
     }),
     getBrands: build.query<BrandResponse, void>({
       query:()=> `brands`,

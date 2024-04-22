@@ -1,0 +1,19 @@
+// vite.config.ts
+import { vitePlugin as remix } from "file:///home/dianafrial/pinkcell-app/spa/node_modules/@remix-run/dev/dist/index.js";
+import { defineConfig } from "file:///home/dianafrial/pinkcell-app/spa/node_modules/vite/dist/node/index.js";
+import tsconfigPaths from "file:///home/dianafrial/pinkcell-app/spa/node_modules/vite-tsconfig-paths/dist/index.mjs";
+var vite_config_default = defineConfig({
+  build: {
+    manifest: true
+  },
+  plugins: [
+    remix({
+      ssr: false
+    }),
+    tsconfigPaths()
+  ]
+});
+export {
+  vite_config_default as default
+};
+//# sourceMappingURL=data:application/json;base64,ewogICJ2ZXJzaW9uIjogMywKICAic291cmNlcyI6IFsidml0ZS5jb25maWcudHMiXSwKICAic291cmNlc0NvbnRlbnQiOiBbImNvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9kaXJuYW1lID0gXCIvaG9tZS9kaWFuYWZyaWFsL3BpbmtjZWxsLWFwcC9zcGFcIjtjb25zdCBfX3ZpdGVfaW5qZWN0ZWRfb3JpZ2luYWxfZmlsZW5hbWUgPSBcIi9ob21lL2RpYW5hZnJpYWwvcGlua2NlbGwtYXBwL3NwYS92aXRlLmNvbmZpZy50c1wiO2NvbnN0IF9fdml0ZV9pbmplY3RlZF9vcmlnaW5hbF9pbXBvcnRfbWV0YV91cmwgPSBcImZpbGU6Ly8vaG9tZS9kaWFuYWZyaWFsL3BpbmtjZWxsLWFwcC9zcGEvdml0ZS5jb25maWcudHNcIjtpbXBvcnQgeyB2aXRlUGx1Z2luIGFzIHJlbWl4IH0gZnJvbSBcIkByZW1peC1ydW4vZGV2XCI7XG5pbXBvcnQgeyBkZWZpbmVDb25maWcgfSBmcm9tIFwidml0ZVwiO1xuaW1wb3J0IHRzY29uZmlnUGF0aHMgZnJvbSBcInZpdGUtdHNjb25maWctcGF0aHNcIjtcblxuZXhwb3J0IGRlZmF1bHQgZGVmaW5lQ29uZmlnKHtcbiAgYnVpbGQ6e1xuICAgIG1hbmlmZXN0OiB0cnVlLFxuICB9LFxuICBwbHVnaW5zOiBbXG4gICAgcmVtaXgoeyBcbiAgICAgIHNzcjogZmFsc2UsXG4gICAgfSksIHRzY29uZmlnUGF0aHMoKV0sXG4gIFxufSk7XG4iXSwKICAibWFwcGluZ3MiOiAiO0FBQXFSLFNBQVMsY0FBYyxhQUFhO0FBQ3pULFNBQVMsb0JBQW9CO0FBQzdCLE9BQU8sbUJBQW1CO0FBRTFCLElBQU8sc0JBQVEsYUFBYTtBQUFBLEVBQzFCLE9BQU07QUFBQSxJQUNKLFVBQVU7QUFBQSxFQUNaO0FBQUEsRUFDQSxTQUFTO0FBQUEsSUFDUCxNQUFNO0FBQUEsTUFDSixLQUFLO0FBQUEsSUFDUCxDQUFDO0FBQUEsSUFBRyxjQUFjO0FBQUEsRUFBQztBQUV2QixDQUFDOyIsCiAgIm5hbWVzIjogW10KfQo=

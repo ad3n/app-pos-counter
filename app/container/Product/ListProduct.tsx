@@ -70,14 +70,16 @@ export default function ListProductContainer({type="screen", spacing="narrow"}:I
                     </div>
                     
                      <div className="flex max-w-md gap-4 ml-2 items-center justity-center">
-                        <Checkbox color="teal" value={filterData?.active? "on" : "off"} checked={filterData?.active??false} 
-                            onChange={toggleSwitchActive} />
+                        <Checkbox color="teal" 
+                            value={filterData?.active ? "on" : "off"} 
+                            checked={filterData?.active ?? false} 
+                            onChange={toggleSwitchActive} 
+                        />
                         <Label htmlFor="accept" className="flex">
                             Active?
                         </Label>
                      </div>
                 </div>
-              
             </Card>
 
             {isLoading ? <Loader /> : (data && data.length > 0) ? <div className="mt-10">
@@ -86,7 +88,10 @@ export default function ListProductContainer({type="screen", spacing="narrow"}:I
                         <Badge className="inline-flex not-italic" color={"pink"} size={"lg"}>
                             {item.name}
                         </Badge>
-                        <ItemCategory type={type} category={item.name} products={item.products} />
+                        <ItemCategory type={type} 
+                            catId={Number(filterData.category_id)} 
+                            category={item.name} 
+                            products={item.products} />
                     </div>
                 ))}
             
@@ -99,14 +104,17 @@ export default function ListProductContainer({type="screen", spacing="narrow"}:I
 }
 
 export const ItemCategory = ( 
-    { products, type, category } : 
-    { products: ProductItem[], type:IProps["type"], category:string 
-}) => {
+    { products, type, category, catId } : 
+    { products: ProductItem[], type:IProps["type"], category:string, catId:number }
+) => {
     return (
-        <Card className="max-w-full mt-4" theme={{root:{children:"flex h-full flex-col justify-center gap-4 p-4"}}}>
+        <Card className="max-w-full mt-4" theme={{root:{
+            children:"flex h-full flex-col justify-center gap-4 p-4"}}}>
             {<div className="flow-root">
-                {(products && products.length > 0) ? <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                    {products.map(item => <ItemProduct category={category} linkType={type} item={item} />)}
+                {(products && products.length > 0) ? <ul 
+                    className="divide-y divide-gray-200 dark:divide-gray-700">
+                    {products.map(item => <ItemProduct 
+                        selectedCatId={catId} category={category} linkType={type} item={item} />)}
                 </ul> : <div className="my-4">
                     <span className="text-white align-center">No products</span>
                 </div>}
@@ -116,8 +124,8 @@ export const ItemCategory = (
 }
 
 export const ItemProduct = ( 
-    { item, linkType, category } : 
-    {item:ProductItem,linkType:IProps["type"], category:string } 
+    { item, linkType, category, selectedCatId } : 
+    {item:ProductItem,linkType:IProps["type"], category:string, selectedCatId:number } 
 ) => {
     const navigate = useNavigate()
     const { name, price, sale_price, type, brand_name, active, total_qty } = item
@@ -134,7 +142,7 @@ export const ItemProduct = (
             if( isActive ) return
             navigate("/transaction/omzet?type=add", {state:item})
         } else {
-            navigate("/products/view", {state:{...item, category} })
+            navigate(`/products/view?=catId=${selectedCatId}`, {state:{...item, category} })
         }
     }
     
