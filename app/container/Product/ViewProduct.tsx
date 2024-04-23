@@ -72,14 +72,14 @@ export default function ViewProductContainer({ type } :  {type:string }) {
     return (<div>
            
             <Card className="max-w-full pb-4">
+                <p className="truncate text-lg font-medium text-gray-900 dark:text-white">{name}</p>
                 <div className="flex items-center justify-between space-x-4">
                     <div className="flex flex-col">
-                        <p className="truncate text-lg font-medium text-gray-900 dark:text-white">{name}</p>
                         <div className="flex">
-                            {brand_name && <Badge className="inline-flex mt-2" color={"dark"} 
-                                size={"md"}>{brand_name}</Badge>}
+                            {brand_name && <Badge className="inline-flex" color={"dark"} 
+                                size={"xs"}>{brand_name}</Badge>}
 
-                            <Badge className="inline-flex mt-2 ml-2" color={ curStates.active ? "green" : "red"} 
+                            <Badge className="inline-flex ml-2" color={ curStates.active ? "green" : "red"} 
                                 size={"sm"}>{curStates.active ? "Active" : "Non-active"}</Badge>
                         </div>
                         
@@ -87,7 +87,7 @@ export default function ViewProductContainer({ type } :  {type:string }) {
                     {curStates.type === EProductTypes.piece && <div>
                         <Button onClick={()=>setOpenmodal(true)}>
                             <MdAdd size={16} />
-                                <span className="ml-2">Item Stock</span>
+                                <span className="ml-2">Stock</span>
                         </Button>
                     </div>}
                 </div>

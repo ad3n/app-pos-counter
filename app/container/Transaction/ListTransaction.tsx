@@ -95,8 +95,8 @@ export default function ListTransactionContainer() {
                         <h5 className="text-xl mb-1 leading-none text-gray-900 dark:text-white">
                             Penjualan
                         </h5>
-                        <h3 onClick={onListIncome} className="text-green-700 mb-2 font-bold text-2xl">
-                            {currency(data?.transactions_debit?.total??0)} &larr;
+                        <h3 onClick={onListIncome} className="text-green-700 mb-2 font-bold text-xl">
+                            &larr; {currency(data?.transactions_debit?.total??0)} 
                         </h3>
                         <h5 className="text-md mb-1 leading-none text-gray-400">
                             Terhutang
@@ -110,7 +110,7 @@ export default function ListTransactionContainer() {
                         <h5 className="text-xl mb-1 leading-none text-gray-900 dark:text-white">
                             Pengeluaran
                         </h5>
-                        <h3 onClick={onListExpense} className="text-pink-500 font-bold mb-2 text-2xl">{currency(
+                        <h3 onClick={onListExpense} className="text-pink-500 font-bold mb-2 text-xl">{currency(
                             data?.expenses?.total??0
                         )} &rarr; </h3>
                         <h5 className="text-md mb-1 leading-none text-gray-400">
@@ -150,27 +150,27 @@ export const ItemTransaction = ( { item }: {item:TransactionItem} ) => {
         return moment(created_date.raw, "DD-MM-YYYY HH:mm:ss").utcOffset(7).format("DD MMM - HH:mm")
     }
     return (
-        <li className="py-3 sm:py-4 cursor-pointer" onClick={()=>navigate("/transaction/view", {state:item})}>
+        <li className="py-3 sm:py-4 cursor-pointer">
             <div className="flex items-center space-x-4">
                 <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-normal text-gray-400">{order_no}</p>
                     <p className="truncate text-md font-medium text-gray-900 dark:text-white">{name}</p>
-                    <Badge className="inline-flex not-italic mt-2" color={"gray"} size={"sm"}>{dateShow()}</Badge>
-                    <Badge className="inline-flex mt-2 ml-2" color={payment_status.value === EPaymentStatus.credit ? "purple" : "dark"} size={"sm"}>{payment_status.label}</Badge>
+                    <Badge className="inline-flex not-italic mt-2" color={"gray"} size={"xs"}>{dateShow()}</Badge>
+                    <Badge className="inline-flex mt-2 ml-2" color={payment_status.value === EPaymentStatus.credit ? "purple" : "dark"} size={"xs"}>{payment_status.label}</Badge>
                 </div>
                 <div className="flex flex-col items-end font-semibold text-gray-900 dark:text-white"> 
                     {qty > 1 && <p className="truncate text-sm font-medium text-gray-300 dark:text-white-200">
                         {qty} x {currency(items[0]?.price)}
                     </p>}
-                    <span className={clsx(["text-xl",
+                    <span className={clsx(["text-lg",
                         {'text-pink-500': type.value === EPaymentTypes.expense},
                     ])}>
                        {type.value === EPaymentTypes.expense ? "-" : ""} {currency(total as number)}
                     </span>
                     {/* {Number(item.on_sale) === 1 && <Badge color={"lime"} size={30}> {currency(sale_price as number)}</Badge>} */}
                 </div>
-                <div className="inline-flex items-center text-base font-semibold text-gray-700 dark:text-gray-500">        
-                   <MdArrowForward onClick={()=>navigate("/transaction/view", {state:item})} />
+                <div onClick={()=>navigate("/transaction/view", {state:item})} className="inline-flex items-center h-16 text-base font-semibold text-gray-700 dark:text-gray-500">        
+                   <MdArrowForward />
                 </div>
             </div>
         </li>
