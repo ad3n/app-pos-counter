@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux"
 import { useAccount } from "~/hooks/useAccount"
 
 export const ListMenuProfile = () => {
-    const buttonClass = "h-14 text-base	 text-white flex items-center w-full border-b border-gray-200 py-2 px-4 dark:border-gray-600"
+    const buttonClass = "h-14 text-base	dark:text-white flex items-center w-full border-b border-gray-200 py-2 px-4 dark:border-gray-600"
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -32,7 +32,7 @@ export const ListMenuProfile = () => {
             </ListGroup>
 
             <div className="my-4">
-                <h4 className="text-white">Manage</h4>
+                <h4 className="dark:text-white">Manage</h4>
             </div>
            
             <ListGroup className="w-full">
@@ -51,7 +51,7 @@ export const ListMenuProfile = () => {
             </ListGroup>
 
             <div className="my-4">
-                <h4 className="text-white">Exit</h4>
+                <h4 className="dark:text-white">Exit</h4>
             </div>
 
             <ListGroup className="w-full">

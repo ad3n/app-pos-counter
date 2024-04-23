@@ -2,7 +2,7 @@ import { Spinner } from "flowbite-react";
 
 export const Loader = () => {
     return (
-        <div className="flex items-center justify-center gap-2">
+        <div className="flex items-center justify-center gap-2 my-4 ">
             <div className="text-center">
                 <Spinner aria-label="Center-aligned spinner loading" size="xl" />
             </div>
