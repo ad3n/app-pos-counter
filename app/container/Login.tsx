@@ -15,8 +15,7 @@ export default function LoginContainer() {
     const { account } = useAccount()
 
     if( account?.token ) navigate("/dash")
-
-    return <LoginForm />
+    else return <LoginForm />    
 }
 
 function LoginForm() {
