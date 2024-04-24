@@ -180,7 +180,7 @@ export const ItemStocks = (
     const [openremove, setOpenremove] = useState<boolean>()
     const {isLoading, data, refetch, isSuccess} = useGetStocksQuery(product_id)
     const dateShow = (date:string) => {
-        return moment(date, "DD-MM-YYYY HH:mm:ss").utcOffset(7).format("DD MMM YYYY - HH:mm")
+        return moment(date).add(7, "hours").format("DD MMM YYYY - HH:mm")
     }
 
     const toggleStockModal = () => {

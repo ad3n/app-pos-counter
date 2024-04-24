@@ -7,7 +7,6 @@ import { useAccount } from "~/hooks/useAccount"
 
 export const ListMenuProfile = () => {
     const buttonClass = "h-14 text-base	dark:text-white flex items-center w-full border-b border-gray-200 py-2 px-4 dark:border-gray-600"
-
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { isAdmin } = useAccount()

@@ -18,22 +18,19 @@ export default function ListTransactionContainer() {
     const navigate = useNavigate()
     const { account, isAdmin } = useAccount()  
     const [date, setDate] = useState(moment(new Date()).toDate())
+    const [skip, setSkip] = useState(true)
     const [filterData, setFilterData] = useState<Partial<TGetRequestTransaction>>({
         merchant_id:account?.user?.merchant_id as number,
-        employee_id:undefined,
+        employee_id:isAdmin() ? undefined : account?.user?.id as number,
         per_page:-1,
         date: moment(new Date()).format("YYYY-MM-DD")
     })  
-    const { isLoading, data, refetch } = useGetTransactionsQuery({
-        merchant_id:account?.user?.merchant_id as number,
-        ...filterData,
-    })
+    const { isLoading, data, refetch } = useGetTransactionsQuery(filterData, {skip:skip})
 
     const onAddIncome = () => navigate("/transaction/omzet?type=cart")
     const onAddExpense = () => navigate("/transaction/expense")
     const onListExpense = () => navigate("/transaction/expense?type=list")
     const onListIncome = () => navigate("/transaction/omzet?type=list")
-
 
     const onFilterStaff = useCallback((id:number)=>{
         setFilterData((prev)=>({...prev, employee_id:id}))
@@ -46,8 +43,18 @@ export default function ListTransactionContainer() {
     }
 
     useEffect(()=>{
-        refetch()
-    },[filterData, setFilterData])
+        if( account?.user?.merchant_id ) {
+            setFilterData({
+                ...filterData,
+                merchant_id:account.user.merchant_id,
+                employee_id:isAdmin() ? undefined : account?.user?.id as number,
+            })
+            setSkip(false)
+        }
+    },[account?.user?.merchant_id])
+    // useEffect(()=>{
+    //     refetch()
+    // },[filterData, setFilterData])
     
     return (
         <div className="pb-2 px-2 pt-6">
@@ -147,10 +154,10 @@ export const ItemTransaction = ( { item }: {item:TransactionItem} ) => {
     const navigate = useNavigate()
     const { name, total, order_no, items, type, qty, created_date, payment_status } = item
     const dateShow = () => {
-        return moment(created_date.raw, "DD-MM-YYYY HH:mm:ss").utcOffset(7).format("DD MMM - HH:mm")
+        return created_date.long
     }
     return (
-        <li className="py-3 sm:py-4 cursor-pointer">
+        <li className="py-3 sm:py-4 cursor-pointer" onClick={()=>navigate("/transaction/view", {state:item})}>
             <div className="flex items-center space-x-4">
                 <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-normal text-gray-400">{order_no}</p>

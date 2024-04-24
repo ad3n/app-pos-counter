@@ -21,6 +21,5 @@ export const LoaderCenter = () => {
                 </div>
             </div>
         </div>
-        
     )
 }

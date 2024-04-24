@@ -28,7 +28,7 @@ export default function ListProductContainer({type="screen", spacing="narrow"}:I
         offset:0,
         active:true
     })
-    const { isLoading, data, refetch } = useGetProductsCategorizedQuery(filterData)
+    const { isLoading, data, refetch } = useGetProductsCategorizedQuery(filterData, {skip:false})
 
     const onAdd = () => navigate("/products/add")
 
@@ -44,10 +44,6 @@ export default function ListProductContainer({type="screen", spacing="narrow"}:I
     const toggleSwitchActive = ({target:{name,value}}:ChangeEvent<HTMLInputElement>) => {
         setFilterData(prev=>({...prev, active:value === "on" ? false : true}))
     }
-
-    useEffect(()=>{
-        refetch()
-    },[filterData, setFilterData])
     
     return (
         <ProductContainer handleChange={onSearch} spacing={spacing}>
@@ -164,7 +160,7 @@ export const ItemProduct = (
                     </Badge>}
                 </div>
                 <div className="inline-flex items-center text-base font-semibold text-gray-700 dark:text-gray-500">        
-                    {type === EProductTypes.piece && total_qty ? <Badge color="green" className="mr-1 text-md font-bold">
+                    {type === EProductTypes.piece && (total_qty && total_qty > 0) ? <Badge color="green" className="mr-1 text-md font-bold">
                         {total_qty}
                     </Badge> : null}
                     {type === EProductTypes.piece && (!total_qty || total_qty < 1) ? <Badge color="red" size={"xs"} 
