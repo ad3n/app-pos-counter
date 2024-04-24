@@ -6,7 +6,7 @@
   "scripts": {
     "build": "remix vite:build",
     "build:prod": "remix vite:build --mode production",
-    "publish": "sh $HOME/pinkcell-app/spa/.publish/deploy.sh",
+    "publish": "sh ./.publish/deploy.sh",
     "dev": "remix vite:dev",
     "dev:prod": "remix vite:dev --mode production",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",

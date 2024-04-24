@@ -23,13 +23,17 @@ type IProps = {
 export default function ListProductContainer({type="screen", spacing="narrow"}:IProps) {
     const navigate = useNavigate()
     const { account } = useAccount()  
+    const [skip, setSkip] = useState(true)
     const [filterData, setFilterData] = useState<GetRequestProduct>({
         per_page:20,
         offset:0,
         active:true
     })
-    const { isLoading, data, refetch } = useGetProductsCategorizedQuery(filterData, {skip:false})
+    const { isLoading, data, refetch } = useGetProductsCategorizedQuery(filterData, {skip})
 
+    useEffect(()=>{
+        setSkip(false) 
+    },[])
     const onAdd = () => navigate("/products/add")
 
     const onSearch = (data:any) => {
