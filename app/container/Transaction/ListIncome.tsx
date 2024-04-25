@@ -183,7 +183,7 @@ export const ItemTransaction = ( { item }: {item:TransactionItem} ) => {
     const navigate = useNavigate()
     const { name, total, order_no, items, type, qty, created_date, payment_method, expense_type } = item
     const dateShow = () => {
-        return moment(created_date.raw, "DD-MM-YYYY HH:mm:ss").utcOffset(7).format("DD MMM - HH:mm")
+        return created_date.long
     }
     return (
         <li className="py-3 sm:py-4 cursor-pointer" onClick={()=>navigate("/transaction/view", {state:item})}>

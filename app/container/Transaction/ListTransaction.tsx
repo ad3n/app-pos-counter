@@ -130,8 +130,9 @@ export default function ListTransactionContainer() {
                 </div>
             </Card>
 
-            {isLoading ? <Loader /> : (data && data.items.length > 0) ? <div className="mt-10 mb-40">
-                <Card className="max-w-full mt-4">
+            {isLoading ? <Loader /> : (data && data.items.length > 0) ? <div className="mt-4 mb-40">
+                <h3 className="dark:text-white">Total Transaksi : {data.items.length}</h3>
+                <Card className="max-w-full mt-2">
                     {<div className="flow-root">
                         {(data?.items && data.items.length > 0) ? <ul className="divide-y divide-gray-200 dark:divide-gray-700">
                             {data.items.map(item => <ItemTransaction key={item.id} item={item} />)}
@@ -158,7 +159,7 @@ export const ItemTransaction = ( { item }: {item:TransactionItem} ) => {
     }
     return (
         <li className="py-3 sm:py-4 cursor-pointer" onClick={()=>navigate("/transaction/view", {state:item})}>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
                 <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-normal text-gray-400">{order_no}</p>
                     <p className="truncate text-md font-medium text-gray-900 dark:text-white">{name}</p>
