@@ -27,9 +27,8 @@ export default function AddCustomerContainer({ type } :  {type:string }) {
 
     const [addCustomer, { isLoading, isError, error, status }] = useAddCustomerMutation()
     const [editCustomer, updateStates ] = useEditCustomerMutation()
-    const customerStates = useGetCustomerQuery(location.state.id)
+    //const customerStates = useGetCustomerQuery(location.state.id)
 
-    console.log("customerStates", customerStates.data)
     const onAdd = async () => {
         const user = (await getUserToken()).user
 
